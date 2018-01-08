@@ -6,15 +6,24 @@ namespace TankGame
 {
     public class PlayerUnit: Unit
     {
+        [SerializeField]
+        private string horizontalAxis = "Horizontal";
 
-        public PlayerUnit()
-        {
-
-        }
+        [SerializeField]
+        private string verticalAxis = "Vertical";
 
         protected override void Update()
         {
+            var input = PlayerInput();
+            mover.Turn(input.x);
+            mover.Move(input.z);
+        }
 
+        private Vector3 PlayerInput()
+        {
+            float Movement = Input.GetAxis(verticalAxis);
+            float turn = Input.GetAxis(horizontalAxis);
+            return new Vector3(turn, 0, Movement);
         }
     }
 }

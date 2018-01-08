@@ -471,6 +471,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1590593663}
   - component: {fileID: 1590593664}
+  - component: {fileID: 1590593665}
   m_Layer: 0
   m_Name: PlayerTank
   m_TagString: Untagged
@@ -501,6 +502,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac070aa7718689a42a231b7a4f87747c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 4
+  turnSpeed: 40
+  horizontalAxis: Horizontal
+  verticalAxis: Vertical
+--- !u!114 &1590593665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1590593662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef0dbd8c3d0a82041ab54ce16c07e328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1713942063
@@ -576,10 +592,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1713942063}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: 0.2548716, y: -0, z: -0, w: 0.9669749}
+  m_LocalPosition: {x: 0, y: 22.41, z: -25.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 29.532001, y: 0, z: 0}
