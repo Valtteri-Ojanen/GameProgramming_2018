@@ -11,8 +11,13 @@ namespace TankGame
         [SerializeField]
         public float moveSpeed, turnSpeed; 
 
+        public Weapon Weapon
+        {
+            get;
+            protected set;
+        }
 
-        protected IMover mover
+        protected IMover Mover
         {
             get { return _mover; }
         }
@@ -27,7 +32,13 @@ namespace TankGame
             _mover = gameObject.GetOrAddComponent<TransformMover>();
             //_mover = GetComponent<IMover>();
 
-            mover.Init(moveSpeed, turnSpeed);
+            Mover.Init(moveSpeed, turnSpeed);
+
+            Weapon = GetComponentInChildren<Weapon>();
+            if( Weapon != null)
+            {
+                Weapon.Init(this);
+            }
         }
 
         public virtual void Clear()

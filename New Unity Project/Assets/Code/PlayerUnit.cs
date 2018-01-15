@@ -15,8 +15,8 @@ namespace TankGame
         protected override void Update()
         {
             var input = PlayerInput();
-            mover.Turn(input.x);
-            mover.Move(input.z);
+            Mover.Turn(input.x);
+            Mover.Move(input.z);
         }
 
         private Vector3 PlayerInput()

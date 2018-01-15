@@ -28,5 +28,46 @@ namespace TankGame
             }
             return component;
         }
+
+        public static TComponent GetComponentInInactiveParent<TComponent>(this GameObject gameobject)
+            where TComponent : Component
+        {
+            GameObject go = null;
+            if(gameobject.transform.parent != null)
+            {
+                go = gameobject.transform.parent.gameObject;
+            }
+            TComponent component = go.GetComponent<TComponent>();
+            if(component == null && go.transform.parent != null)
+            {
+                 component = go.GetComponentInInactiveParent<TComponent>();
+            }
+            return component;
+        }
+
+        public static TComponent GetComponentInHierarchy<TComponent> (this GameObject gameobject, bool includeInactive = false)
+            where TComponent : Component
+        {
+            TComponent component = gameobject.GetComponent<TComponent>();
+
+            if(component == null && !includeInactive)
+            {
+                component = gameobject.GetComponentInParent<TComponent>();
+                if (component == null)
+                {
+                    component = gameobject.GetComponentInChildren<TComponent>();
+                }
+            }
+            else if(component == null && includeInactive)
+            {
+                component = gameobject.GetComponentInInactiveParent<TComponent>();
+                if(component == null)
+                {
+                    component = gameobject.GetComponentInChildren<TComponent>(true);
+                }
+            }
+            return component;
+
+        }
     }
 }
