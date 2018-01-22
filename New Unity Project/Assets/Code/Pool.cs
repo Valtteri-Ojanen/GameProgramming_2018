@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System;
+using Object = UnityEngine.Object;
 
 namespace TankGame
 {
@@ -19,6 +21,8 @@ namespace TankGame
         // The list containing all the objects in this pool.
         private List<T> _pool;
 
+        private Action<T> _initMethod;
+
         public Pool(int poolSize, bool shouldGrow, T prefab)
         {
             _poolSize = poolSize;
@@ -30,6 +34,17 @@ namespace TankGame
             for(int i = 0; i < _poolSize; ++i)
             {
                 AddObject();
+            }
+        }
+
+        public Pool(int poolSize, bool shouldGrow, T prefab, Action<T> initMethod)
+            : this(poolSize, shouldGrow, prefab)
+        {
+            _initMethod = initMethod;
+
+            foreach(var item in _pool)
+            {
+                _initMethod(item);
             }
         }
 

@@ -112,6 +112,34 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &424744755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 424744756}
+  m_Layer: 8
+  m_Name: ShootingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &424744756
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 424744755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1227686696}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &657126716
 GameObject:
   m_ObjectHideFlags: 0
@@ -121,7 +149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 657126717}
   - component: {fileID: 657126718}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,14 +162,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 657126716}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1227686696}
   m_Father: {fileID: 675007992}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &657126718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -155,6 +183,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _projectilePrefab: {fileID: 114907032350971722, guid: c514fe9513bf26d4a97c3a85b3da8717,
     type: 2}
+  _firingRate: 0.33333334
+  _shootingPoint: {fileID: 424744756}
 --- !u!1 &675007991
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +196,7 @@ GameObject:
   - component: {fileID: 675007995}
   - component: {fileID: 675007994}
   - component: {fileID: 675007993}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,7 +281,7 @@ GameObject:
   - component: {fileID: 982088219}
   - component: {fileID: 982088218}
   - component: {fileID: 982088217}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +354,7 @@ Transform:
   m_LocalScale: {x: 10, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1227686695
 GameObject:
@@ -337,7 +367,7 @@ GameObject:
   - component: {fileID: 1227686699}
   - component: {fileID: 1227686698}
   - component: {fileID: 1227686697}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,13 +380,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1227686695}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.4, z: 0}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0.4}
   m_LocalScale: {x: 0.2, y: 0.40000024, z: 0.20000012}
-  m_Children: []
+  m_Children:
+  - {fileID: 424744756}
   m_Father: {fileID: 657126717}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!23 &1227686697
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -474,7 +505,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1590593662
 GameObject:
@@ -486,7 +517,7 @@ GameObject:
   - component: {fileID: 1590593663}
   - component: {fileID: 1590593664}
   - component: {fileID: 1590593665}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlayerTank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -504,8 +535,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 675007992}
+  - {fileID: 1713942067}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1590593664
 MonoBehaviour:
@@ -544,7 +576,7 @@ GameObject:
   - component: {fileID: 1713942066}
   - component: {fileID: 1713942065}
   - component: {fileID: 1713942064}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -607,9 +639,9 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1713942063}
   m_LocalRotation: {x: 0.2548716, y: -0, z: -0, w: 0.9669749}
-  m_LocalPosition: {x: 0, y: 22.41, z: -25.89}
+  m_LocalPosition: {x: 0, y: 8.57, z: -8.28}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_Father: {fileID: 1590593663}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 29.532001, y: 0, z: 0}
