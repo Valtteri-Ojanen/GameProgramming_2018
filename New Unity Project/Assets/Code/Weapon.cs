@@ -24,7 +24,12 @@ namespace TankGame
         public void Init (Unit owner)
         {
             _owner = owner;
-            _projectiles = new Pool<Projectile>(4, false, _projectilePrefab, item => item.Init(this));
+            _projectiles = new Pool<Projectile>(4, false, _projectilePrefab, InitProjectile );
+        }
+
+        private void InitProjectile( Projectile projectile)
+        {
+            projectile.Init(ProjectileHit);
         }
 
         public bool Shoot ()
@@ -63,7 +68,7 @@ namespace TankGame
             }
         }
 
-        public void ProjectileHit (Projectile projectile)
+        private void ProjectileHit (Projectile projectile)
         {
             if(!_projectiles.ReturnObject(projectile))
             {
