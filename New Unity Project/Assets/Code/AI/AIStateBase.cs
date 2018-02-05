@@ -16,7 +16,7 @@ namespace TankGame.AI
     {
         public AIStateType State { get; protected set; }
         public IList<AIStateType> TargetStates { get; protected set; }
-        public Unit Owner { get; protected set; }
+        public EnemyUnit Owner { get; protected set; }
 
         protected AIStateBase()
         {

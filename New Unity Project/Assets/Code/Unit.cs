@@ -17,7 +17,7 @@ namespace TankGame
             protected set;
         }
 
-        protected IMover Mover
+        public IMover Mover
         {
             get { return _mover; }
         }

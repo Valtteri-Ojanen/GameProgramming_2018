@@ -3,14 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using TankGame.AI;
 using System.Linq;
+using TankGame.WaypointSystem;
 
 namespace TankGame
 {
     public class EnemyUnit: Unit
     {
+
+        [SerializeField]
+        private float _detectEnemyDistance;
+        [SerializeField]
+        private float _shootingDistance;
+        [SerializeField]
+        private float _arriveDistance;
+
+        [SerializeField]
+        private Path _path;
+
+        [SerializeField]
+        private Direction _direction;
+
         private IList<AIStateBase> _states = new List<AIStateBase>();
 
         public AIStateBase CurrentState { get; private set; }
+        public float DetectEnemyDistance { get { return _detectEnemyDistance; } }
+        public float ShootingDistance { get { return _shootingDistance; } }
+        public PlayerUnit Target { get; set; }
 
         public override void Init()
         {
@@ -20,12 +38,14 @@ namespace TankGame
 
         private void InitStates ()
         {
-            // TODO: Implement me!
+            PatrolState patrol = new PatrolState(this, _path, _direction, _arriveDistance);
+            _states.Add(patrol);
+            CurrentState = patrol;
+            CurrentState.StateActivated();
         }
 
         protected override void Update()
         {
-            return;
             CurrentState.Update();
         }
 
@@ -53,5 +73,6 @@ namespace TankGame
         {
             return _states.FirstOrDefault(( state ) => state.State == stateType);
         }
+
     }
 }
