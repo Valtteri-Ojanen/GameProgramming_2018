@@ -7,7 +7,7 @@ namespace TankGame
     public class Projectile: MonoBehaviour
     {
         [SerializeField]
-        private float _damage;
+        private int _damage;
 
         [SerializeField]
         private float _shootingForce;
@@ -17,6 +17,9 @@ namespace TankGame
 
         [SerializeField]
         private float explosionRadius;
+
+        [SerializeField, HideInInspector]
+        private int _hitMask;
 
         private Weapon _weapon;
         private Rigidbody _rigidbody;
@@ -50,9 +53,24 @@ namespace TankGame
         protected void OnCollisionEnter( Collision collision )
         {
             //TODO: Add particle effects.
-            //TODO: Apply Damage to enemies.
+            ApplyDamage();
             Rigidbody.velocity = Vector3.zero;
             _collisionCallback(this);
+        }
+
+        private void ApplyDamage()
+        {
+            List<IDamageReceiver> alreadyDamaged = new List<IDamageReceiver>();
+            Collider[] damageReceivers = Physics.OverlapSphere(transform.position, explosionRadius, _hitMask);
+            for(int i = 0; i < damageReceivers.Length; i++)
+            {
+                IDamageReceiver damageReceiver = damageReceivers[i].GetComponentInParent<IDamageReceiver>();
+                if(damageReceiver != null && !alreadyDamaged.Contains(damageReceiver))
+                {
+                    alreadyDamaged.Add(damageReceiver);
+                    damageReceiver.TakeDamage(_damage);
+                }
+            }
         }
     }
 }

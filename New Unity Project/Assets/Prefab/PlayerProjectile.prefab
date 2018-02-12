@@ -98,7 +98,8 @@ MonoBehaviour:
   _damage: 10
   _shootingForce: 25
   _explosionForce: 50
-  explosionRadius: 5
+  explosionRadius: 3
+  _hitMask: 2560
 --- !u!135 &135789909418553074
 SphereCollider:
   m_ObjectHideFlags: 1

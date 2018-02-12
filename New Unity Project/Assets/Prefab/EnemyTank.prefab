@@ -297,10 +297,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   turnSpeed: 2.65
+  _startingHealth: 0
   _detectEnemyDistance: 10
-  _shootingDistance: 5
+  _shootingDistance: 6
   _arriveDistance: 0.5
   _path: {fileID: 0}
+  _direction: 0
 --- !u!136 &136009907535892682
 CapsuleCollider:
   m_ObjectHideFlags: 1
