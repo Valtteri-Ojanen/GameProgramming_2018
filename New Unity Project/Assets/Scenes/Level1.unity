@@ -326,12 +326,12 @@ Prefab:
     - target: {fileID: 114911121365358402, guid: 149ed021254a7a848807778c1ba7e036,
         type: 2}
       propertyPath: _detectEnemyDistance
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114911121365358402, guid: 149ed021254a7a848807778c1ba7e036,
         type: 2}
       propertyPath: _shootingDistance
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114911121365358402, guid: 149ed021254a7a848807778c1ba7e036,
         type: 2}

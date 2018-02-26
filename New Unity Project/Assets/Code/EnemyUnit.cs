@@ -54,6 +54,8 @@ namespace TankGame
             _states.Add(patrol);
             FollowTargetState follow = new FollowTargetState(this);
             _states.Add(follow);
+            ShootState shoot = new ShootState(this);
+            _states.Add(shoot);
             CurrentState = patrol;
             CurrentState.StateActivated();
         }
