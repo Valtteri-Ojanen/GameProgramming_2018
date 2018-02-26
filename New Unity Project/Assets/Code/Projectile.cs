@@ -21,6 +21,8 @@ namespace TankGame
         [SerializeField, HideInInspector]
         private int _hitMask;
 
+        public GameObject _explosionParticle;
+
         private Weapon _weapon;
         private Rigidbody _rigidbody;
 
@@ -53,6 +55,11 @@ namespace TankGame
         protected void OnCollisionEnter( Collision collision )
         {
             //TODO: Add particle effects.
+
+            GameObject explosion = Instantiate(_explosionParticle);
+            ContactPoint contact = collision.contacts[0];
+            explosion.transform.position = new Vector3(contact.point.x, contact.point.y + 6f, contact.point.z);
+            Destroy(explosion, 2f);
             ApplyDamage();
             Rigidbody.velocity = Vector3.zero;
             _collisionCallback(this);

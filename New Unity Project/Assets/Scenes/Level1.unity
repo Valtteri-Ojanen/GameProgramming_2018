@@ -839,8 +839,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c4b9cff2cc7b54084d4a2cf8915560, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _angle: 45
-  _distance: 10
+  _angle: 41.5
+  _distance: 12.3
   _targetTransform: {fileID: 1598770559}
 --- !u!1 &1575038313
 GameObject:

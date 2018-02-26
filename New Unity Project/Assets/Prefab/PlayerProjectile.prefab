@@ -100,6 +100,8 @@ MonoBehaviour:
   _explosionForce: 50
   explosionRadius: 3
   _hitMask: 2560
+  _explosionParticle: {fileID: 1701637693293108, guid: bd3df7449d0645d4cae3ff9720fb969e,
+    type: 2}
 --- !u!135 &135789909418553074
 SphereCollider:
   m_ObjectHideFlags: 1
