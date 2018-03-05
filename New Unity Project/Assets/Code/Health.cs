@@ -28,5 +28,10 @@ namespace TankGame
             }
             return didDie;
         }
+
+        public void SetHealth(int health)
+        {
+            CurrentHealth = health;
+        }
     }
 }

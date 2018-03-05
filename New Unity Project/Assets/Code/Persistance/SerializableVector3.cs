@@ -4,7 +4,7 @@ using System;
 namespace TankGame.Persistance
 {
     [Serializable]
-    public class SerializableVector3: MonoBehaviour
+    public class SerializableVector3
     {
         public float X;
         public float Y;
@@ -27,6 +27,26 @@ namespace TankGame.Persistance
         {
 
         }
-       
+
+        public static implicit operator SerializableVector3 (Vector3 v)
+        {
+            return new SerializableVector3 ( v );
+        }
+
+        public static implicit operator SerializableVector3(Vector2 v)
+        {
+            return new SerializableVector3(v);
+        }
+
+        public static implicit operator Vector3 (SerializableVector3 v)
+        {
+            return new Vector3(v.X, v.Y, v.Z);
+        }
+
+        public static explicit operator Vector2( SerializableVector3 v )
+        {
+            return new Vector3(v.X, v.Y);
+        }
+
     }
 }
