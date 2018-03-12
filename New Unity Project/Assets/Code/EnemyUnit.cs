@@ -23,6 +23,11 @@ namespace TankGame
         [SerializeField]
         private Direction _direction;
 
+        [SerializeField]
+        private float _honkDistance;
+        [SerializeField]
+        private AudioSource _honkSound;
+
         private IList<AIStateBase> _states = new List<AIStateBase>();
 
         public AIStateBase CurrentState { get; private set; }
@@ -50,7 +55,7 @@ namespace TankGame
 
         private void InitStates ()
         {
-            PatrolState patrol = new PatrolState(this, _path, _direction, _arriveDistance);
+            PatrolState patrol = new PatrolState(this, _path, _direction, _arriveDistance, _honkDistance, _honkSound);
             _states.Add(patrol);
             FollowTargetState follow = new FollowTargetState(this);
             _states.Add(follow);

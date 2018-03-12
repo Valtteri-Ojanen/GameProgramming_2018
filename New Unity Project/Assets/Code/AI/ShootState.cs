@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,6 +31,19 @@ public class ShootState : AIStateBase {
         public override void StateActivated()
         {
             base.StateActivated();
+            Owner.Target.Health.UnitDied += OnTargetDied;
+        }
+
+        private void OnTargetDied(Unit target)
+        {
+            Owner.PerformTransition(AIStateType.Patrol);
+            Owner.Target = null;
+        }
+
+        public override void StateDeactivating()
+        {
+            base.StateDeactivating();
+            Owner.Target.Health.UnitDied -= OnTargetDied;
         }
 
 
@@ -54,13 +68,7 @@ public class ShootState : AIStateBase {
             Vector3 toPlayerVector = Owner.transform.position - Owner.Target.transform.position;
             float sqrDistanceToPlayer = toPlayerVector.sqrMagnitude;
             if(sqrDistanceToPlayer > SqrShootingDistance)
-                return Owner.PerformTransition(AIStateType.FollowTarget);
-            else if(!Owner.Target.gameObject.activeInHierarchy)
-            {
-                Owner.Target = null;
-                return Owner.PerformTransition(AIStateType.Patrol);
-            }
-            
+                return Owner.PerformTransition(AIStateType.FollowTarget);            
 
             return false;
         }

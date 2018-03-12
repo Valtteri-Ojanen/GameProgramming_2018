@@ -11,10 +11,13 @@ namespace TankGame.AI
         private Path _path;
         private Direction _direction;
         private float _arriveDistance;
-
         public Waypoint CurrentWaypoint { get; private set; }
 
-        public PatrolState (EnemyUnit owner, Path path, Direction direction, float arriveDistance)
+        private float _honkDistance;
+        private AudioSource _honkSound;
+        private bool _honkUsed = false;
+
+        public PatrolState (EnemyUnit owner, Path path, Direction direction, float arriveDistance, float honkDistance, AudioSource honkSound)
         {
             State = AIStateType.Patrol;
             Owner = owner;
@@ -22,6 +25,8 @@ namespace TankGame.AI
             _path = path;
             _direction = direction;
             _arriveDistance = arriveDistance;
+            _honkDistance = honkDistance;
+            _honkSound = honkSound;
         }
 
         public override void StateActivated()
@@ -36,7 +41,16 @@ namespace TankGame.AI
             // 1.1 if yes, change state and return
             if(!ChangeState())
             {
-
+                int mask = 1 << LayerMask.NameToLayer("Enemy");
+                Collider[] enemies = Physics.OverlapSphere(Owner.transform.position, _honkDistance, mask);
+                if(enemies.Length > 2 && !_honkUsed)
+                {
+                    _honkSound.Play();
+                    _honkUsed = true;
+                } else if (enemies.Length == 2)
+                {
+                    _honkUsed = false;
+                }
                 CurrentWaypoint = GetWaypoint();
                 // 2. Are we close enough the current waypoint
                 // 2.1 if yes, get next waypoint

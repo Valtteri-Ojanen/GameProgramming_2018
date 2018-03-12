@@ -29,7 +29,7 @@ namespace TankGame
 
         protected IMover _mover;
 
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private int _id = -1;
 
         [SerializeField]
@@ -55,11 +55,6 @@ namespace TankGame
         }
 
         public Health Health { get; protected set; }
-
-        protected void Awake()
-        {
-            Init();
-        }
 
         protected void OnDestroy()
         {
