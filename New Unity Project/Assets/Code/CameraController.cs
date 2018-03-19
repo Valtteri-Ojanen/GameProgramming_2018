@@ -60,7 +60,7 @@ namespace TankGame
         {
             Vector3 direction = target - transform.position;
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 90);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 90 * Time.deltaTime);
         }
     }
 }

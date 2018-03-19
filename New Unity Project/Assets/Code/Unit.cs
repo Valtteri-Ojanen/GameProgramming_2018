@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TankGame.Persistance;
+using TankGame.Messaging;
 
 namespace TankGame
 {
@@ -99,6 +100,7 @@ namespace TankGame
 
         protected virtual void HandleUnitDied(Unit unit)
         {
+            GameManager.Instance.MessageBus.Publish( new UnitDiedMessage(this));
             gameObject.SetActive(false);
         }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using TankGame.Persistance;
 using System.Linq;
+using TankGame.Messaging;
 
 namespace TankGame
 {
@@ -16,7 +17,7 @@ namespace TankGame
         {
             get
             {
-                if(_instance == null)
+                if(_instance == null && !IsClosing)
                 {
                     GameObject gameManager = new GameObject(typeof(GameManager).Name);
                     _instance = gameManager.AddComponent<GameManager>();
@@ -24,7 +25,10 @@ namespace TankGame
                 return _instance;
             }
         }
-#endregion Statics
+
+        public static bool IsClosing { get; private set; }
+
+        #endregion Statics
         private List<Unit> _enemyUnits = new List<Unit>();
         private Unit _playerUnit;
         private SaveSystem _saveSystem;
@@ -34,6 +38,7 @@ namespace TankGame
             get { return Path.Combine(Application.persistentDataPath, "save"); }
         }
 
+        public MessageBus MessageBus { get; private set; }
 
         public void Awake()
         {
@@ -49,9 +54,15 @@ namespace TankGame
 
             Init();
         }
+        private void OnApplicationQuit()
+        {
+            IsClosing = true;
+        }
 
         private void Init ()
         {
+            IsClosing = false;
+            MessageBus = new MessageBus();
             var UI = FindObjectOfType<UI.UI>();
             UI.Init();
 
