@@ -5,6 +5,7 @@ using System.IO;
 using TankGame.Persistance;
 using System.Linq;
 using TankGame.Messaging;
+using TankGame.Localization;
 
 namespace TankGame
 {
@@ -61,6 +62,7 @@ namespace TankGame
 
         private void Init ()
         {
+            Localization.Localization.LoadLanguage(LangCode.EN);
             IsClosing = false;
             MessageBus = new MessageBus();
             var UI = FindObjectOfType<UI.UI>();

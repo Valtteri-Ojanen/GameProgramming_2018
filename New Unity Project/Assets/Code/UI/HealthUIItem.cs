@@ -56,7 +56,7 @@ namespace TankGame.UI
 
         private void SetText(int health)
         {
-            _text.text = string.Format("{0} Health : {1}", _unit.name, health);
+            _text.text = string.Format("{0} {1} : {2}", _unit.name, Localization.Localization.CurrentLanguage.GetTranslation("Health"), health);
         }
     }
 }
