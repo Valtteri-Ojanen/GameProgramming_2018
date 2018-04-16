@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TankGame.Messaging;
+using L10n = TankGame.Localization.Localization;
 
 namespace TankGame.UI
 {
@@ -39,6 +40,7 @@ namespace TankGame.UI
             if(msg.DeadUnit == _unit)
             {
                 UnregisterEventListeners();
+                gameObject.SetActive(false);
             }
         }
 
@@ -56,7 +58,9 @@ namespace TankGame.UI
 
         private void SetText(int health)
         {
-            _text.text = string.Format("{0} {1} : {2}", _unit.name, Localization.Localization.CurrentLanguage.GetTranslation("Health"), health);
+            string unitKey = IsEnemy ? "Enemy" : "Player";
+            string unitTranslation = L10n.CurrentLanguage.GetTranslation(unitKey);
+            _text.text = string.Format("{0} {1} : {2}", unitTranslation, Localization.Localization.CurrentLanguage.GetTranslation("Health"), health);
         }
     }
 }

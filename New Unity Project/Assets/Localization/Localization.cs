@@ -19,7 +19,7 @@ namespace TankGame.Localization
         public const string LocalizationFolderName = "Localization";
         public const string FileExtension = ".json";
 
-        public static Action LanguageLoaded;
+        public static event Action LanguageLoaded;
 
         public static string LocalizationPath
         {

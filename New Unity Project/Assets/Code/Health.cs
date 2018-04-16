@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using L10N = TankGame.Localization.Localization;
 
 namespace TankGame
 {
@@ -28,6 +29,12 @@ namespace TankGame
         {
             Owner = owner;
             CurrentHealth = startingHealth;
+            L10N.LanguageLoaded += LanguageChanged;
+        }
+
+        private void OnDestroy()
+        {
+            L10N.LanguageLoaded -= LanguageChanged;
         }
 
         public bool TakeDamage(int damage)
@@ -44,6 +51,11 @@ namespace TankGame
         public void SetHealth(int health)
         {
             CurrentHealth = health;
+        }
+
+        private void LanguageChanged ()
+        {
+            HealthChanged(Owner, _currentHealth);
         }
     }
 }

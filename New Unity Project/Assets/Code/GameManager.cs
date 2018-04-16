@@ -6,6 +6,7 @@ using TankGame.Persistance;
 using System.Linq;
 using TankGame.Messaging;
 using TankGame.Localization;
+using System;
 
 namespace TankGame
 {
@@ -33,10 +34,20 @@ namespace TankGame
         private List<Unit> _enemyUnits = new List<Unit>();
         private Unit _playerUnit;
         private SaveSystem _saveSystem;
+        private float _points;
+        private float _pointsToWin;
+        private int loopIndex;
+
+        public event Action<float> ScoreChanged;
 
         public string SavePath
         {
             get { return Path.Combine(Application.persistentDataPath, "save"); }
+        }
+
+        public float Points
+        {
+            get { return _points; }
         }
 
         public MessageBus MessageBus { get; private set; }
@@ -60,20 +71,53 @@ namespace TankGame
             IsClosing = true;
         }
 
+        private void OnDestroy()
+        {
+            Localization.Localization.LanguageLoaded -= OnLanguageLoaded;
+        }
+
         private void Init ()
         {
-            Localization.Localization.LoadLanguage(LangCode.EN);
+            InitLocalization();
             IsClosing = false;
             MessageBus = new MessageBus();
             var UI = FindObjectOfType<UI.UI>();
             UI.Init();
-
+            _pointsToWin = 100f;
             Unit[] allUnits = FindObjectsOfType<Unit>();
             foreach(Unit unit in allUnits)
             {
                 AddUnit(unit);
             }
             _saveSystem = new SaveSystem(new BinaryPersistance(SavePath));
+        }
+
+        private const string LanguageKey = "Language";
+
+        private void InitLocalization()
+        {
+            LangCode currentLang = (LangCode) PlayerPrefs.GetInt(LanguageKey, (int)LangCode.EN);
+            Localization.Localization.LoadLanguage(currentLang);
+            Localization.Localization.LanguageLoaded += OnLanguageLoaded;
+        }
+
+        private void OnLanguageLoaded()
+        {
+            PlayerPrefs.SetInt(LanguageKey, (int)Localization.Localization.CurrentLanguage.LanguageCode);
+            ScoreChanged(_points);
+        }
+
+        private void GameWon()
+        {
+            // Legacy Code
+            //if(loopIndex < 9000)
+            //{
+            //    loopIndex++;
+            //    GameWon();
+            //}
+
+            //Debug.Log("seems like you are trapped in a loop");
+            //Debug.Log("just kidding");
         }
 
         protected void Update()
@@ -126,6 +170,16 @@ namespace TankGame
                 }
             }
             _playerUnit.SetUnitData(data.PlayerData);
+        }
+
+        public void AddScore(float amount)
+        {
+            _points += amount;
+            ScoreChanged(_points);
+            if(_points >= _pointsToWin)
+            {
+                GameWon();
+            }
         }
     }
 }
