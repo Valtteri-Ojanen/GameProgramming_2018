@@ -15,18 +15,23 @@ namespace TankGame.UI
 
         private void Awake()
         {
-            Localization.Localization.LanguageLoaded += OnLanguageLoaded;
+            Localization.Localization.LanguageLoaded += SetText;
         }
 
         private void Start()
         {
-            OnLanguageLoaded();
+            SetText();
         }
 
-        private void OnLanguageLoaded()
+        private void SetText()
         {
             _text.text =
                 Localization.Localization.CurrentLanguage.GetTranslation(_key);
+        }
+
+        private void OnDestroy()
+        {
+            Localization.Localization.LanguageLoaded -= SetText;
         }
     }
 }

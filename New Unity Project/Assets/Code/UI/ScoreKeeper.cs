@@ -16,7 +16,7 @@ namespace TankGame.UI
         {
             _text = GetComponentInChildren<Text>();
             GameManager.Instance.ScoreChanged += SetText;
-            SetText(GameManager.Instance.Points);
+            SetText(GameManager.Instance.Score);
         }
 
         private void OnDestroy()
@@ -26,6 +26,7 @@ namespace TankGame.UI
 
         private void SetText( float score )
         {
+            // Sets score text that is called when Gamemanagers score has changed or language has been changed
             _text.text = string.Format("{0} : {1} ",  L10n.CurrentLanguage.GetTranslation("Score"), score);
         }
     }

@@ -38,6 +38,7 @@ namespace TankGame
 
         [SerializeField]
         private int _startingHealth;
+        private Vector3 _spawnPosition;
 
         public Weapon Weapon
         {
@@ -62,6 +63,15 @@ namespace TankGame
             Health.UnitDied -= HandleUnitDied;
         }
 
+        /// <summary>
+        /// After unit respawns place it to the position it was in the start of the game and set it health to starting health.
+        /// </summary>
+        public void Respawn()
+        {
+            Health.SetHealth(_startingHealth);
+            transform.position = _spawnPosition;
+        }
+
         public virtual void Init()
         {
             _mover = gameObject.GetOrAddComponent<TransformMover>();
@@ -76,6 +86,7 @@ namespace TankGame
 
             Health = new Health(this, _startingHealth);
             Health.UnitDied += HandleUnitDied;
+            _spawnPosition = transform.position;
         }
 
         public virtual void Clear()

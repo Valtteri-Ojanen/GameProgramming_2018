@@ -1,1 +1,1 @@
-﻿{"_keys":["Save","Health","Test","Player","Enemy","Score"],"_values":["save","health","test","player","enemy","score"],"_langCode":1}
+﻿{"_keys":["Save","Health","Test","Player","Enemy","Score","PlayerDeaths","GameWon","GameLost","Exit","Restart","Respawn"],"_values":["Save","Health","Test","Player","Enemy","Score","Player deaths","Game won!","Game lost","Exit","Restart","Respawns in"],"_langCode":1}

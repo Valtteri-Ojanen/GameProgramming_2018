@@ -55,7 +55,10 @@ namespace TankGame
 
         private void LanguageChanged ()
         {
-            HealthChanged(Owner, _currentHealth);
+            if(HealthChanged != null)
+            {
+                HealthChanged(Owner, _currentHealth);
+            }
         }
     }
 }

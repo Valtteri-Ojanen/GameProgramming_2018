@@ -7,6 +7,7 @@ using System.Linq;
 using TankGame.Messaging;
 using TankGame.Localization;
 using System;
+using UnityEngine.SceneManagement;
 
 namespace TankGame
 {
@@ -31,29 +32,39 @@ namespace TankGame
         public static bool IsClosing { get; private set; }
 
         #endregion Statics
+        [SerializeField]
+        private float _scoreToWin = 1000f;
+        [SerializeField]
+        private int _playerDeathsToLose = 3;
         private List<Unit> _enemyUnits = new List<Unit>();
         private Unit _playerUnit;
         private SaveSystem _saveSystem;
-        private float _points;
-        private float _pointsToWin;
-        private int loopIndex;
+        private float _score;
+        private int _playerDeaths;
 
         public event Action<float> ScoreChanged;
+
+        public int PlayerDeaths
+        {
+            get { return _playerDeaths; }
+            private set { _playerDeaths = value; }
+        }
 
         public string SavePath
         {
             get { return Path.Combine(Application.persistentDataPath, "save"); }
         }
 
-        public float Points
+        public float Score
         {
-            get { return _points; }
+            get { return _score; }
         }
 
         public MessageBus MessageBus { get; private set; }
 
         public void Awake()
         {
+            Time.timeScale = 1f;
             if(_instance == null)
             {
                 _instance = this;
@@ -74,6 +85,8 @@ namespace TankGame
         private void OnDestroy()
         {
             Localization.Localization.LanguageLoaded -= OnLanguageLoaded;
+            // Used to prevent making new gamemanagers when scene is reloading.
+            IsClosing = true;
         }
 
         private void Init ()
@@ -83,7 +96,6 @@ namespace TankGame
             MessageBus = new MessageBus();
             var UI = FindObjectOfType<UI.UI>();
             UI.Init();
-            _pointsToWin = 100f;
             Unit[] allUnits = FindObjectsOfType<Unit>();
             foreach(Unit unit in allUnits)
             {
@@ -104,20 +116,42 @@ namespace TankGame
         private void OnLanguageLoaded()
         {
             PlayerPrefs.SetInt(LanguageKey, (int)Localization.Localization.CurrentLanguage.LanguageCode);
-            ScoreChanged(_points);
+            // Refreshes the score text when language is changed
+            if(ScoreChanged != null)
+            {
+                ScoreChanged(_score);
+            }
         }
 
+        /// <summary>
+        /// Called when player has won the game by obtaining enough score.
+        /// </summary>
         private void GameWon()
         {
-            // Legacy Code
-            //if(loopIndex < 9000)
-            //{
-            //    loopIndex++;
-            //    GameWon();
-            //}
+            MessageBus.Publish(new GameEndedMessage( gameWon : true, gameLost : false));
+            Time.timeScale = 0;
+        }
 
-            //Debug.Log("seems like you are trapped in a loop");
-            //Debug.Log("just kidding");
+        /// <summary>
+        /// Called when player has death counter exceeds the limit.
+        /// </summary>
+        private void GameLost()
+        {
+            MessageBus.Publish(new GameEndedMessage( gameWon: false, gameLost: true));
+            Time.timeScale = 0;
+        }
+
+        /// <summary>
+        /// Called when player has died, checks if the current amount of playerdeaths is enough to lose the game
+        /// </summary>
+        public void PlayerDied()
+        {
+            PlayerDeaths++;
+            Debug.Log("playerDied " + PlayerDeaths);
+            if(PlayerDeaths >= _playerDeathsToLose)
+            {
+                GameLost();
+            }
         }
 
         protected void Update()
@@ -172,14 +206,31 @@ namespace TankGame
             _playerUnit.SetUnitData(data.PlayerData);
         }
 
+        /// <summary>
+        /// Adds points to cu
+        /// </summary>
+        /// <param name="amount"></param>
         public void AddScore(float amount)
         {
-            _points += amount;
-            ScoreChanged(_points);
-            if(_points >= _pointsToWin)
+            _score += amount;
+            if(ScoreChanged != null)
+            {
+                ScoreChanged(_score);
+            }
+            if(_score >= _scoreToWin)
             {
                 GameWon();
             }
+        }
+
+        public void Exit()
+        {
+            Application.Quit();
+        }
+        
+        public void Restart()
+        {
+            SceneManager.LoadScene("Level1");
         }
     }
 }

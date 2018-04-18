@@ -1,1 +1,1 @@
-﻿{"_keys":["Save","Test","Health","Player","Enemy","Score"],"_values":["tallenna","testaa","hipat","pelaaja","vihollinen","pisteet"],"_langCode":2}
+﻿{"_keys":["Save","Test","Health","Player","Enemy","Score","PlayerDeaths","GameWon","GameLost","Exit","Restart","Respawn"],"_values":["Tallenna","Testaa","Hipat","Pelaaja","Vihollinen","Pisteet","Pelaajan kuolemat","Voitit pelin!","Hävisit pelin","Lopeta","Pelaa uudelleen","Uudelleensyntyy"],"_langCode":2}
