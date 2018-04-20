@@ -85,8 +85,6 @@ namespace TankGame
         private void OnDestroy()
         {
             Localization.Localization.LanguageLoaded -= OnLanguageLoaded;
-            // Used to prevent making new gamemanagers when scene is reloading.
-            IsClosing = true;
         }
 
         private void Init ()
@@ -230,6 +228,9 @@ namespace TankGame
         
         public void Restart()
         {
+            // Used to prevent making new gamemanagers when scene is reloading.
+            IsClosing = true;
+
             SceneManager.LoadScene("Level1");
         }
     }
